@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 const TeamLogo = props => {
     return (
         <View style={styles.teamContainer}>
-            <Image source={props.logo} style={styles.teamLogo} />
+            <Image source={props.logo} style={styles.teamLogo} resizeMode="contain" />
             <Text style={styles.teamName}>{props.team}</Text>
         </View>
     );

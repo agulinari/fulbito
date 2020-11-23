@@ -7,6 +7,7 @@ const PlayerList = props => {
         return <PlayerItem
             avatar={itemData.item.avatar}
             name={itemData.item.name}
+            description={itemData.item.description}
             onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
@@ -24,7 +25,7 @@ const PlayerList = props => {
                 data={props.listData}
                 renderItem={renderPlayerItem}
                 numColumns={1}
-                style={{ width: '100%' }}
+                style={{ width: '90%' }}
             />
         </View>
 
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: '90%',
+        width: '100%',
         margin: 10
     }
 });

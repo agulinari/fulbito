@@ -9,11 +9,14 @@ const PlayerItem = props => {
             <TouchableOpacity onPress={props.onSelect}>
                 <View style={styles.playerInfo}>
                     <Image
-                        style={styles.image}
+                        style={styles.imageContainer}
                         resizeMode="contain"
                         source={props.avatar}
                     />
-                    <DefaultText>{props.name}</DefaultText>
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.name}>{props.name}</Text>
+                        <DefaultText>{props.description}</DefaultText>
+                    </View>
                 </View>
             </TouchableOpacity>
         </View>
@@ -26,7 +29,6 @@ const styles = StyleSheet.create({
         height: 75,
         width: '100%',
         backgroundColor: Colors.rowColor,
-        alignSelf: 'stretch',
         marginBottom: 2,
         overflow: 'hidden'
     },
@@ -37,9 +39,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    image: {
+    imageContainer: {
         width: 60,
         height: 60
+    },
+   nameContainer: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        paddingLeft: 20,
+        alignItems: 'flex-start'        
+    },
+    name: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 22
     }
 });
 

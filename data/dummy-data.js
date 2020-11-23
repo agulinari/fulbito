@@ -20,19 +20,19 @@ export const MATCHES = [
 ];
 
 export const PLAYERS = [
-    new Player('p1', require('../assets/avatar.png'), 'Leo'),
-    new Player('p2', require('../assets/avatar.png'), 'Lina'),
-    new Player('p3', require('../assets/avatar.png'), 'Benja'),
-    new Player('p4', require('../assets/avatar.png'), 'Fede'),
-    new Player('p5', require('../assets/avatar.png'), 'Quique'),
-    new Player('p6', require('../assets/avatar.png'), 'Gabi'),
-    new Player('p7', require('../assets/avatar.png'), 'Nacho'),
-    new Player('p8', require('../assets/avatar.png'), 'Gonza'),
-    new Player('p9', require('../assets/avatar.png'), 'Juan'),
-    new Player('p10', require('../assets/avatar.png'), 'Bruno'),
-    new Player('p11', require('../assets/avatar.png'), 'Pato'),
-    new Player('p12', require('../assets/avatar.png'), 'Pablo'),
-    new Player('p13', require('../assets/avatar.png'), 'Picci'),
+    new Player('p1', require('../assets/avatar.png'), 'Leo', 'EL lobo del oeste'),
+    new Player('p2', require('../assets/avatar.png'), 'Lina', 'Tirador de mogolicas'),
+    new Player('p3', require('../assets/avatar.png'), 'Benja', 'La bestia del gol'),
+    new Player('p4', require('../assets/avatar.png'), 'Fede', 'Sale haciendo jueguito'),
+    new Player('p5', require('../assets/avatar.png'), 'Quique', 'El muro impenetrable'),
+    new Player('p6', require('../assets/avatar.png'), 'Gabi', 'El goleador fantasma'),
+    new Player('p7', require('../assets/avatar.png'), 'Nacho', 'Nachito veloz'),
+    new Player('p8', require('../assets/avatar.png'), 'Gonza', 'El mago'),
+    new Player('p9', require('../assets/avatar.png'), 'Juan', 'El doctor del futbol'),
+    new Player('p10', require('../assets/avatar.png'), 'Bruno', 'El simulador'),
+    new Player('p11', require('../assets/avatar.png'), 'Pato', 'La leyenda del gol'),
+    new Player('p12', require('../assets/avatar.png'), 'Pablo', 'El terminator'),
+    new Player('p13', require('../assets/avatar.png'), 'Picci', 'El arquero estrella'),
 ];
 
 export const MATCHES_DETAIL = [
