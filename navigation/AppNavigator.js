@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -16,6 +16,8 @@ import CurrentMatchScreen from '../screens/CurrentMatchScreen';
 import EnlistingScreen from '../screens/EnlistingScreen';
 import PollScreen from '../screens/PollScreen';
 import PlayerProfileScreen from '../screens/PlayerProfileScreen';
+import AuthScreen from '../screens/AuthScreen';
+import StartupScreen from '../screens/StartupScreen';
 
 const defaultStackNavigationOptions = {
     headerStyle: {
@@ -156,4 +158,16 @@ const MainNavigator = createDrawerNavigator({
     }
 })
 
-export default createAppContainer(MainNavigator);
+const AuthNavigator = createStackNavigator({
+    Auth: AuthScreen
+}, {
+    defaultNavigationOptions: defaultStackNavigationOptions
+});
+
+const AppNavigator = createSwitchNavigator({
+    Startup: StartupScreen,
+    Auth: AuthNavigator,
+    Main: MainNavigator
+})
+
+export default createAppContainer(AppNavigator);

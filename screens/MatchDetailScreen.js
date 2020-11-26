@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { MATCHES_DETAIL } from '../data/dummy-data';
 import TeamCard from '../components/TeamCard';
 import MessageList from '../components/MessageList';
@@ -53,52 +53,52 @@ const MatchDetailScreen = props => {
                 </View>
                 <MessageList listData={selectedMatch.comments} />
                 <View style={styles.chart}>
-                <Text style={styles.title}>Terminator</Text>
-                <PieChart
-                    data={data}
-                    width={screenWidth}
-                    height={220}
-                    chartConfig={chartConfig}
-                    accessor="votes"
-                    backgroundColor="transparent"
-                    paddingLeft="15"
-                />
+                    <Text style={styles.title}>Terminator</Text>
+                    <PieChart
+                        data={data}
+                        width={screenWidth}
+                        height={220}
+                        chartConfig={chartConfig}
+                        accessor="votes"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                    />
                 </View>
                 <View style={styles.chart}>
-                <Text style={styles.title}>Anti-FairPlay</Text>
-                <PieChart
-                    data={data}
-                    width={screenWidth}
-                    height={220}
-                    chartConfig={chartConfig}
-                    accessor="votes"
-                    backgroundColor="transparent"
-                    paddingLeft="15"
-                />
+                    <Text style={styles.title}>Anti-FairPlay</Text>
+                    <PieChart
+                        data={data}
+                        width={screenWidth}
+                        height={220}
+                        chartConfig={chartConfig}
+                        accessor="votes"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                    />
                 </View>
                 <View style={styles.chart}>
-                <Text style={styles.title}>Goleador</Text>
-                <PieChart
-                    data={data}
-                    width={screenWidth}
-                    height={220}
-                    chartConfig={chartConfig}
-                    accessor="votes"
-                    backgroundColor="transparent"
-                    paddingLeft="15"
-                />
+                    <Text style={styles.title}>Goleador</Text>
+                    <PieChart
+                        data={data}
+                        width={screenWidth}
+                        height={220}
+                        chartConfig={chartConfig}
+                        accessor="votes"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                    />
                 </View>
                 <View style={styles.chart}>
-                <Text style={styles.title}>Fantasma</Text>
-                <PieChart
-                    data={data}
-                    width={screenWidth}
-                    height={220}
-                    chartConfig={chartConfig}
-                    accessor="votes"
-                    backgroundColor="transparent"
-                    paddingLeft="15"
-                />
+                    <Text style={styles.title}>Fantasma</Text>
+                    <PieChart
+                        data={data}
+                        width={screenWidth}
+                        height={220}
+                        chartConfig={chartConfig}
+                        accessor="votes"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import authReducer from './store/reducers/auth';
+import  { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 //import { enableScreens } from 'react-native-screens';
 
 //enableScreens();
 
+const rootReducer = combineReducers({
+  auth: authReducer
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
 const fetchFonts = () => {
-  Font.loadAsync({
+  return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
   });
@@ -27,6 +37,8 @@ export default function App() {
   }
 
   return (
-    <AppNavigator/>
+    <Provider store={store}>
+      <AppNavigator/>
+    </Provider>
   );
 }

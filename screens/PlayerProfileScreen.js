@@ -1,16 +1,18 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
-
+import Profile from '../components/Profile';
+import contactData from '../data/contact.json';
 
 const PlayerProfileScreen = props => {
     return (
         <SafeAreaView style={styles.screen}>
-            <Text>PlayerProfile Screen</Text>
+            <Profile {...contactData} />
         </SafeAreaView>
-    );
+    )
 };
+
 
 PlayerProfileScreen.navigationOptions = (navData) => {
     return {

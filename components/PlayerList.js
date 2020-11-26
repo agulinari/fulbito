@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import PlayerItem from './PlayerItem';
+import Colors from '../constants/Colors';
 
 const PlayerList = props => {
     const renderPlayerItem = (itemData) => {
@@ -25,7 +26,7 @@ const PlayerList = props => {
                 data={props.listData}
                 renderItem={renderPlayerItem}
                 numColumns={1}
-                style={{ width: '90%' }}
+                style={{ width: '100%' }}
             />
         </View>
 

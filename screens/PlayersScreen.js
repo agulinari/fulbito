@@ -4,6 +4,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 import PlayerList from '../components/PlayerList';
 import { PLAYERS } from '../data/dummy-data';
+import Colors from '../constants/Colors';
 
 const PlayersScreen = props => {
     return (
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: Colors.rowColor
     }
 });
 

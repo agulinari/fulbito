@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
         height: 75,
         width: '100%',
         backgroundColor: Colors.rowColor,
+        borderBottomColor: Colors.secondaryColor,
+        elevation: 10,
         marginBottom: 2,
         overflow: 'hidden'
     },
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
     },
     name: {
         fontFamily: 'open-sans-bold',
-        fontSize: 22
+        fontSize: 22,
+        color: Colors.primaryColor
     }
 });
 
