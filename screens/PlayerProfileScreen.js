@@ -16,14 +16,7 @@ const PlayerProfileScreen = props => {
 
 PlayerProfileScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Player Profile',
-        headerLeft: (
-            <HeaderButtons HeaderButtonsComponent={HeaderButton}>
-                <Item title="Menu" iconName='ios-menu' onPress={() => { 
-                    navData.navigation.toggleDrawer()
-                }} />
-            </HeaderButtons>
-        )
+        headerTitle: 'Player Profile'
     };
 };
 

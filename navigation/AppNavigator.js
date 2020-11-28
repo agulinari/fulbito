@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { Platform } from 'react-native';
+import { Platform, SafeAreaView, View, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import MatchesScreen from '../screens/MatchesScreen';
@@ -18,6 +18,8 @@ import PollScreen from '../screens/PollScreen';
 import PlayerProfileScreen from '../screens/PlayerProfileScreen';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import { useDispatch } from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 const defaultStackNavigationOptions = {
     headerStyle: {
@@ -155,6 +157,19 @@ const MainNavigator = createDrawerNavigator({
         labelStyle: {
             fontFamily: 'open-sans-bold'
         }
+    },
+    contentComponent: props => {
+        const dispatch = useDispatch();
+        return (
+            <View style={{ flex: 1 }}>
+                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                    <DrawerNavigatorItems {...props} />
+                    <Button title="Logout" color={Colors.primaryColor} onPress={() => { 
+                        dispatch(authActions.logout());
+                    }} />
+                </SafeAreaView>
+            </View>
+        );
     }
 })
 

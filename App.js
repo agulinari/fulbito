@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import authReducer from './store/reducers/auth';
 import  { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import NavigationContainer from './navigation/NavigationContainer';
 //import { enableScreens } from 'react-native-screens';
 
 //enableScreens();
@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <AppNavigator/>
+      <NavigationContainer/>
     </Provider>
   );
 }
