@@ -3,6 +3,9 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import authReducer from './store/reducers/auth';
+import playersReducer from './store/reducers/players';
+import matchesReducer from './store/reducers/matches';
+import enlistReducer from './store/reducers/enlist';
 import  { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import NavigationContainer from './navigation/NavigationContainer';
@@ -11,7 +14,10 @@ import NavigationContainer from './navigation/NavigationContainer';
 //enableScreens();
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  players: playersReducer,
+  matches: matchesReducer,
+  enlist: enlistReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

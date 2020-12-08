@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { images } from '../constants/Images';
 
 const TeamLogo = props => {
     return (
         <View style={styles.teamContainer}>
-            <Image source={props.logo} style={styles.teamLogo} resizeMode="contain" />
+            <Image source={images[props.logo].uri} style={styles.teamLogo} resizeMode="contain" />
             <Text style={styles.teamName}>{props.team}</Text>
         </View>
     );

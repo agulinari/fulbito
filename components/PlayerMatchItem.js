@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import DefaultText from './DefaultText';
+import DefaultText from './UI/DefaultText';
 import Colors from '../constants/Colors';
+import { images } from '../constants/Images';
 
 const PlayerMatchItem = props => {
     return (
@@ -11,7 +12,7 @@ const PlayerMatchItem = props => {
                     <Image
                         style={styles.image}
                         resizeMode="contain"
-                        source={props.player.avatar}
+                        source={images[props.player.avatar].uri}
                     />
                     <DefaultText>{props.player.name}</DefaultText>
                     <View style={styles.circle}>

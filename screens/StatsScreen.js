@@ -1,7 +1,7 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import HeaderButton from '../components/HeaderButton';
+import HeaderButton from '../components/UI/HeaderButton';
 
 const StatsScreen = props => {
     return (
@@ -14,11 +14,15 @@ const StatsScreen = props => {
 StatsScreen.navigationOptions = (navData) => {
     return {
         headerTitle: 'Stats',
-        headerLeft: (
-            <HeaderButtons HeaderButtonsComponent={HeaderButton}>
-                <Item title="Menu" iconName='ios-menu' onPress={() => { 
-                    navData.navigation.toggleDrawer()
-                }} />
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="Menu"
+                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer()
+                    }}
+                />
             </HeaderButtons>
         )
     };

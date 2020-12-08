@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import DefaultText from './DefaultText';
+import DefaultText from './UI/DefaultText';
 import TeamLogo from './TeamLogo';
 
 const MatchItem = props => {

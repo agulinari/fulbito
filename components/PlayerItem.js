@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import DefaultText from './DefaultText';
+import DefaultText from './UI/DefaultText';
 import Colors from '../constants/Colors';
+import { images } from '../constants/Images';
 
 const PlayerItem = props => {
     return (
@@ -11,7 +12,7 @@ const PlayerItem = props => {
                     <Image
                         style={styles.imageContainer}
                         resizeMode="contain"
-                        source={props.avatar}
+                        source={images[props.avatar].uri}
                     />
                     <View style={styles.nameContainer}>
                         <Text style={styles.name}>{props.name}</Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { MATCHES_DETAIL } from '../data/dummy-data';
 import TeamCard from '../components/TeamCard';
-import MessageList from '../components/MessageList';
+import MessageList from '../components/UI/MessageList';
 import { ScrollView } from 'react-native-gesture-handler';
 import { PieChart } from 'react-native-chart-kit';
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
-import Colors from '../constants/Colors'
+import Colors from '../../constants/Colors'
 
 const styles = StyleSheet.create({
   container: {

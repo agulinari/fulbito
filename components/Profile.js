@@ -12,9 +12,9 @@ import {
   View
 } from 'react-native'
 import PropTypes from 'prop-types'
-import Email from './Email'
-import Separator from './Separator'
-import Tel from './Tel'
+import Email from './UI/Email'
+import Separator from './UI/Separator'
+import Tel from './UI/Tel'
 
 
 class Profile extends Component {

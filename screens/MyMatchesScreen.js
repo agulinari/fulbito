@@ -2,8 +2,8 @@ import React from 'react';
 import { MATCHES } from '../data/dummy-data';
 import MatchList from '../components/MatchList';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import HeaderButton from '../components/HeaderButton';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import HeaderButton from '../components/UI/HeaderButton';
+import { SafeAreaView, Platform, StyleSheet } from 'react-native';
 
 
 const MyMatchesScreen = props => {
@@ -18,11 +18,15 @@ const MyMatchesScreen = props => {
 MyMatchesScreen.navigationOptions = (navData) => {
     return {
         headerTitle: 'My Matches',
-        headerLeft: (
-            <HeaderButtons HeaderButtonsComponent={HeaderButton}>
-                <Item title="Menu" iconName='ios-menu' onPress={() => {
-                    navData.navigation.toggleDrawer()
-                }} />
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="Menu"
+                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer()
+                    }}
+                />
             </HeaderButtons>
         )
     };
