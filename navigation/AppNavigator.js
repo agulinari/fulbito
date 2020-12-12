@@ -46,12 +46,24 @@ const MyMatchesNavigator = createStackNavigator({
     defaultNavigationOptions: defaultStackNavigationOptions
 });
 
-const CurrentMatchNavigator = createStackNavigator({
-    CurrentMatch: CurrentMatchScreen,
-    Enlisting: EnlistingScreen,
+
+const EnlistingNavigator = createStackNavigator({
+    Enlisting: EnlistingScreen
+}, {
+    defaultNavigationOptions: defaultStackNavigationOptions
+});
+
+
+const PollNavigator = createStackNavigator({
     Poll: PollScreen
 }, {
     defaultNavigationOptions: defaultStackNavigationOptions
+});
+
+const CurrentMatchNavigator = createSwitchNavigator({
+    CurrentMatch: CurrentMatchScreen,
+    Enlisting: EnlistingNavigator,
+    Poll: PollNavigator
 });
 
 const PlayersNavigator = createStackNavigator({

@@ -1,14 +1,82 @@
-import React from 'react';
-import { MATCHES } from '../data/dummy-data';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import MatchList from '../components/MatchList';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/UI/HeaderButton';
-import { SafeAreaView, StyleSheet, Platform } from 'react-native';
+import Colors from '../constants/Colors';
+import { View, Text, Button, ActivityIndicator, SafeAreaView, StyleSheet, Platform } from 'react-native';
+import * as matchesActions from '../store/actions/matches';
 
 const MatchesScreen = props => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [error, setError] = useState();
+    const matches = useSelector(state => state.matches.matches);
+    const dispatch = useDispatch();
+
+    const loadMatches = useCallback(async () => {
+        setError(null);
+        setIsRefreshing(true);
+        try {
+            await dispatch(matchesActions.fetchMatches());
+        } catch {
+            setError(err.message);
+        }
+        setIsRefreshing(false);
+    }, [dispatch, setIsLoading, setError])
+
+    useEffect(() => {
+        const willFocusSub = props.navigation.addListener('willFocus', loadMatches);
+
+        return () => {
+            willFocusSub.remove();
+        };
+    }, [loadMatches]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        loadMatches().then(() => {
+            setIsLoading(false);
+        });
+    }, [dispatch, loadMatches]);
+
+    if (error) {
+        return (
+            <View style={styles.screen} >
+                <Text>An error ocurred!</Text>
+                <Button title="Try Again" color={Colors.primaryColor} onPress={loadMatches} />
+            </View>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <View style={styles.screen} >
+                <ActivityIndicator
+                    size="large"
+                    color={Colors.primaryColor}
+                />
+            </View>
+        )
+    }
+
+    if (!isLoading && matches.length === 0) {
+        return (
+            <View style={styles.screen} >
+                <Text>No matches found.</Text>
+            </View>
+        )
+    }
+
     return (
         <SafeAreaView style={styles.screen}>
-            <MatchList listData={MATCHES} navigation={props.navigation} />
+            <MatchList
+                onRefresh={loadMatches}
+                refreshing={isRefreshing}
+                listData={matches}
+                navigation={props.navigation}
+            />
         </SafeAreaView>
     );
 };

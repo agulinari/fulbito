@@ -19,11 +19,7 @@ export default (state = initalState, action) => {
                 action.matchData.date, 
                 action.matchData.place,
                 action.matchData.team1,
-                action.matchData.team2,
-                action.matchData.logo1,
-                action.matchData.logo2,
-                action.matchData.score1,
-                action.matchData.score2
+                action.matchData.team2
                 );
             return {
                 ...state,
@@ -37,11 +33,7 @@ export default (state = initalState, action) => {
                 action.matchData.date, 
                 action.matchData.place,
                 action.matchData.team1,
-                action.matchData.team2,
-                action.matchData.logo1,
-                action.matchData.logo2,
-                action.matchData.score1,
-                action.matchData.score2
+                action.matchData.team2
                 );
             const updatedMatches = [...state.matches];
             updatedMatches[matchIndex] = updatedMatch;

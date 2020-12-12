@@ -7,7 +7,7 @@ const TeamCard = props => {
     return (
         <View style={styles.teamContainer}>
             <View style={styles.teamLogoContainer}>
-                <TeamLogo logo={props.logo} team={props.team} />
+                <TeamLogo logo={props.logo} name={props.name} />
             </View>
             <PlayerMatchItem player={props.player1} onSelect={() => {
                 props.navigation.navigate({

@@ -1,12 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
-import { MATCHES_DETAIL } from '../data/dummy-data';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, Button, ActivityIndicator } from 'react-native';
 import TeamCard from '../components/TeamCard';
 import MessageList from '../components/UI/MessageList';
 import { ScrollView } from 'react-native-gesture-handler';
 import { PieChart } from 'react-native-chart-kit';
 
 const MatchDetailScreen = props => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+    const matchId = props.navigation.getParam('matchId');
+
+    const selectedMatch = useSelector(state =>
+        state.matches.matches.find(match => match.id === matchId)
+    );
+
+    const votes = useSelector(state => votes.votes);
+
+    const dispatch = useDispatch();
 
     const screenWidth = Dimensions.get('window').width;
     const chartConfig = {
@@ -22,16 +34,59 @@ const MatchDetailScreen = props => {
         { name: 'Bruno', votes: 0, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
     ];
 
-    const matchId = props.navigation.getParam('matchId');
 
-    const selectedMatch = MATCHES_DETAIL.find(match => match.id === matchId);
+    const loadVotes = useCallback(async () => {
+        setError(null);
+        try {
+            await dispatch(votesActions.fetchVotes(matchId));
+        } catch {
+            setError(err.message);
+        }
+    }, [dispatch, setIsLoading, setError])
+
+    useEffect(() => {
+        const willFocusSub = props.navigation.addListener('willFocus', loadVotes);
+
+        return () => {
+            willFocusSub.remove();
+        };
+    }, [loadVotes]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        loadVotes().then(() => {
+            setIsLoading(false);
+        });
+    }, [dispatch, loadVotes]);
+
+    if (error) {
+        return (
+            <View style={styles.screen} >
+                <Text>An error ocurred!</Text>
+                <Button title="Try Again" color={Colors.primaryColor} onPress={loadVotes} />
+            </View>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <View style={styles.screen} >
+                <ActivityIndicator
+                    size="large"
+                    color={Colors.primaryColor}
+                />
+            </View>
+        )
+    }
+
+
     return (
         <SafeAreaView style={styles.screen}>
             <ScrollView>
                 <View style={styles.teamsSection}>
                     <TeamCard
                         navigation={props.navigation}
-                        team={selectedMatch.team1.name}
+                        name={selectedMatch.team1.name}
                         logo={selectedMatch.team1.logo}
                         player1={selectedMatch.team1.players[0]}
                         player2={selectedMatch.team1.players[1]}
@@ -42,7 +97,7 @@ const MatchDetailScreen = props => {
 
                     <TeamCard
                         navigation={props.navigation}
-                        team={selectedMatch.team2.name}
+                        name={selectedMatch.team2.name}
                         logo={selectedMatch.team2.logo}
                         player1={selectedMatch.team2.players[0]}
                         player2={selectedMatch.team2.players[1]}
@@ -106,10 +161,8 @@ const MatchDetailScreen = props => {
 };
 
 MatchDetailScreen.navigationOptions = (navigationData) => {
-    const matchId = navigationData.navigation.getParam('matchId');
-    const selectedMatch = MATCHES_DETAIL.find(match => match.id === matchId);
     return {
-        headerTitle: selectedMatch.title
+        headerTitle:  navigationData.navigation.getParam('matchTitle')
     }
 }
 

@@ -6,6 +6,8 @@ import authReducer from './store/reducers/auth';
 import playersReducer from './store/reducers/players';
 import matchesReducer from './store/reducers/matches';
 import enlistReducer from './store/reducers/enlist';
+import votesReducer from './store/reducers/votes';
+import statusReducer from './store/reducers/status';
 import  { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import NavigationContainer from './navigation/NavigationContainer';
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
   auth: authReducer,
   players: playersReducer,
   matches: matchesReducer,
-  enlist: enlistReducer
+  enlist: enlistReducer,
+  votes: votesReducer,
+  status: statusReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -11,9 +11,9 @@ const MatchItem = props => {
             <View style={{...styles.row, ...styles.header}}>
                 <ImageBackground fadeDuration={200} source={require('../assets/match.jpg')} style={styles.bgImage}>
                     <View style={styles.scoreContainer} >
-                        <TeamLogo logo={props.logo1}  team={props.team1}/>
-                        <Text style={styles.title}>{props.goals1} : {props.goals2}</Text>
-                        <TeamLogo logo={props.logo2} team={props.team2}/>
+                        <TeamLogo logo={props.team1.logo}  name={props.team1.name}/>
+                        <Text style={styles.title}>{props.team1.score} : {props.team2.score}</Text>
+                        <TeamLogo logo={props.team2.logo} name={props.team2.name}/>
                     </View>
                     <View style={styles.titleContainer} >
                     <Text style={styles.title} numberOfLines={1}>{props.title}</Text>

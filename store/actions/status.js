@@ -1,11 +1,10 @@
-export const ENLIST = 'ENLIST';
-export const SET_LIST = 'SET_LIST';
+export const SET_STATUS = 'SET_STATUS';
 
-export const fetchList = () => {
+export const getStatus = () => {
     return async (dispatch, getState) => {
         try {
             const token = getState().auth.token;
-            const response = await fetch(`https://fulbito-7d71e.firebaseio.com/list.json?auth=${token}`);
+            const response = await fetch(`https://fulbito-7d71e.firebaseio.com/status.json?auth=${token}`);
 
             if (!response.ok) {
                 throw new Error('Something went wrong!');
@@ -13,29 +12,28 @@ export const fetchList = () => {
 
             const resData = await response.json();
             console.log(resData);
-            const loadedList = [];
 
-            for (const key in resData) {
-                loadedList.push(resData[key].userId);
-            }
-            dispatch({ type: SET_LIST, list: loadedList });
+            dispatch({ 
+                type: SET_STATUS, 
+                status: resData
+            });
         } catch (err) {
             throw err;
         }
     }
 }
 
-export const enlistUser = (userId) => {
+export const updateStatus = (status) => {
     return async (dispatch, getState) => {
 
         const token = getState().auth.token;
-        const response = await fetch(`https://fulbito-7d71e.firebaseio.com/list.json?auth=${token}`, {
-            method: 'POST',
+        const response = await fetch(`https://fulbito-7d71e.firebaseio.com/status.json?auth=${token}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userId
+                status
             })
         });
 
@@ -46,10 +44,8 @@ export const enlistUser = (userId) => {
         const resData = await response.json();
 
         dispatch({
-            type: ENLIST,
-            userData: {
-                userId: userId
-            }
+            type: SET_STATUS,
+            status: status
         })
     };
     return;

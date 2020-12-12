@@ -11,15 +11,12 @@ const MatchList = props => {
                 place={itemData.item.place}
                 team1={itemData.item.team1}
                 team2={itemData.item.team2}
-                logo1={itemData.item.logo1}
-                logo2={itemData.item.logo2}
-                goals1={itemData.item.score1}
-                goals2={itemData.item.score2}
                 onSelect={() => {
                     props.navigation.navigate({
                         routeName: 'MatchDetail',
                         params: {
-                            matchId: itemData.item.id
+                            matchId: itemData.item.id,
+                            matchTitle: itemData.item.title
                         }
                     })
                 }}
@@ -29,6 +26,8 @@ const MatchList = props => {
     return (
         <View style={styles.list}>
             <FlatList
+                onRefresh={props.onRefresh}
+                refreshing={props.refreshing}
                 keyExtractor={(item, index) => item.id}
                 data={props.listData}
                 renderItem={renderMatchItem}

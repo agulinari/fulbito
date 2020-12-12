@@ -18,6 +18,8 @@ export const fetchMatches = () => {
 
             const resData = await response.json();
 
+            //console.log(resData);
+
             const loadedMatches = [];
             for (const key in resData) {
                 loadedMatches.push(
@@ -27,11 +29,7 @@ export const fetchMatches = () => {
                         resData[key].date,
                         resData[key].place,
                         resData[key].team1,
-                        resData[key].team2,
-                        resData[key].logo1,
-                        resData[key].logo2,
-                        resData[key].score1,
-                        resData[key].score2
+                        resData[key].team2
                     )
                 )
             }
@@ -57,7 +55,7 @@ export const deleteMatch = matchId => {
     }
 };
 
-export const createMatch = (title, date, place, team1, team2, logo1, logo2, score1, score2) => {
+export const createMatch = (title, date, place, team1, team2) => {
     return async (dispatch, getState) => {
 
         const token = getState().auth.token;
@@ -71,11 +69,7 @@ export const createMatch = (title, date, place, team1, team2, logo1, logo2, scor
                 date,
                 place,
                 team1,
-                team2,
-                logo1,
-                logo2,
-                score1,
-                score2
+                team2
             })
         });
 
@@ -91,11 +85,7 @@ export const createMatch = (title, date, place, team1, team2, logo1, logo2, scor
                 date: date,
                 place,
                 team1,
-                team2,
-                logo1,
-                logo2,
-                score1,
-                score2
+                team2
             }
         });
     }
@@ -131,11 +121,7 @@ export const updateMatch = (id, avatar, name, description) => {
                 date: date,
                 place,
                 team1,
-                team2,
-                logo1,
-                logo2,
-                score1,
-                score2
+                team2
             }
         });
     }

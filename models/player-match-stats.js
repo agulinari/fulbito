@@ -1,9 +1,9 @@
 class PlayerMatchStats {
-    constructor(avatar, name, score, awards) {
+    constructor(id, avatar, name, score) {
+        this.id = id;
         this.avatar = avatar;
         this.name = name;
         this.score = score;
-        this.awards = awards;
     }
 }
 

@@ -1,7 +1,8 @@
 class Team {
-    constructor(name, logo, players) {
+    constructor(name, logo, score, players) {
         this.name = name;
         this.logo = logo;
+        this.score = score;
         this.players = players;
     }
 }

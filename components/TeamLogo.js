@@ -6,7 +6,7 @@ const TeamLogo = props => {
     return (
         <View style={styles.teamContainer}>
             <Image source={images[props.logo].uri} style={styles.teamLogo} resizeMode="contain" />
-            <Text style={styles.teamName}>{props.team}</Text>
+            <Text style={styles.teamName}>{props.name}</Text>
         </View>
     );
 
