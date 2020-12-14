@@ -53,7 +53,7 @@ const AuthScreen = props => {
 
     useEffect(()=> {
         if (error) {
-            Alert.alert('An Error Ocurred!', error, [{ text: 'Okay'}]);
+            Alert.alert('Ocurrió un error!', error, [{ text: 'Ok'}]);
         }
     }, [error]);
 
@@ -102,7 +102,7 @@ const AuthScreen = props => {
                             required
                             email
                             autoCapitalize="none"
-                            errorText="Please enter a valid email address."
+                            errorText="Ingrese un email válido."
                             onInputChange={inputChangeHandler}
                             initialValue=""
                         />
@@ -114,7 +114,7 @@ const AuthScreen = props => {
                             required
                             minLenght={5}
                             autoCapitalize="none"
-                            errorText="Please enter a valid password."
+                            errorText="Ingrese un password válido."
                             onInputChange={inputChangeHandler}
                             initialValue=""
                         />

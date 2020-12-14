@@ -9,7 +9,7 @@ const TeamCard = props => {
             <View style={styles.teamLogoContainer}>
                 <TeamLogo logo={props.logo} name={props.name} />
             </View>
-            <PlayerMatchItem player={props.player1} onSelect={() => {
+            <PlayerMatchItem player={props.player1} score={props.score1} onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
                     params: {
@@ -17,7 +17,7 @@ const TeamCard = props => {
                     }
                 })
             }} />
-            <PlayerMatchItem player={props.player2} onSelect={() => {
+            <PlayerMatchItem player={props.player2} score={props.score2} onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
                     params: {
@@ -25,7 +25,7 @@ const TeamCard = props => {
                     }
                 })
             }}/>
-            <PlayerMatchItem player={props.player3} onSelect={() => {
+            <PlayerMatchItem player={props.player3} score={props.score3} onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
                     params: {
@@ -33,7 +33,7 @@ const TeamCard = props => {
                     }
                 })
             }}/>
-            <PlayerMatchItem player={props.player4} onSelect={() => {
+            <PlayerMatchItem player={props.player4} score={props.score4} onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
                     params: {
@@ -41,7 +41,7 @@ const TeamCard = props => {
                     }
                 })
             }}/>
-            <PlayerMatchItem player={props.player5} onSelect={() => {
+            <PlayerMatchItem player={props.player5} score={props.score5} onSelect={() => {
                 props.navigation.navigate({
                     routeName: 'PlayerProfile',
                     params: {

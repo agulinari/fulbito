@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import { View, Text, Picker, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
@@ -55,12 +54,10 @@ const StorePicker = props => {
                     itemStyle={styles.pickerItem}
                     onValueChange={valueChangeHandler}
                 >
-                    {
-                        (!inputState.touched) && <Picker.Item label='' value='0' />
-                    }
+                    <Picker.Item label='' value={0} key={0} />
                     {
                         props.items.map((item, index) => {
-                            return <Picker.Item label={item.label} value={item.value} key={index} />
+                            return <Picker.Item label={item.label} value={item.value} key={index + 1} />
                         })
                     }
                 </Picker>

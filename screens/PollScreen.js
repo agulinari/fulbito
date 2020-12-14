@@ -144,14 +144,14 @@ const PollScreen = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert('An error occurred!', error, [{ text: 'Okay' }]);
+            Alert.alert('Ocurrió un error!', error, [{ text: 'Ok' }]);
         }
     }, [error]);
 
     const submitHandler = useCallback(async () => {
-        console.log(JSON.stringify(formState));
+       
         if (!formState.formIsValid) {
-            Alert.alert('Wrong input!', 'Please check the errors in the form.', [{ text: 'Okay' }]);
+            Alert.alert('Faltan datos a completar!', 'Por favor, complete todos los campos del formulario', [{ text: 'Ok' }]);
             return;
         }
 
@@ -222,7 +222,6 @@ const PollScreen = props => {
     }, [submitHandler]);
 
     const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
-        console.log(inputIdentifier + '-' + inputValue + '-' + inputValidity)
         dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
@@ -234,8 +233,8 @@ const PollScreen = props => {
     if (error) {
         return (
             <View style={styles.screen} >
-                <Text>An error ocurred!</Text>
-                <Button title="Try Again" color={Colors.primaryColor} onPress={loadMatches} />
+                <Text>Ocurrió un error!</Text>
+                <Button title="Intente nuevamente" color={Colors.primaryColor} onPress={loadMatches} />
             </View>
         )
     }
@@ -258,6 +257,7 @@ const PollScreen = props => {
             <ScrollView>
                 <View style={styles.form}>
                     <Card style={styles.card}>
+                        <Text style={styles.title}>Votá a los jugadores</Text>
                         <ScorePicker
                             id='player1'
                             name={(players[0]) ? players[0].label : ''}
@@ -315,6 +315,7 @@ const PollScreen = props => {
 
                     </Card>
                     <Card style={styles.card}>
+                        <Text style={styles.title}>Elegí los premios</Text>
                         <ScorePicker
                             id='goleador'
                             name='Goleador'
@@ -343,7 +344,7 @@ const PollScreen = props => {
                     <Card style={styles.card}>
                         <Input
                             id='comment'
-                            label="Comentario"
+                            label="Dejá un comentario"
                             errorText="Please enter a valid comment!"
                             keyboardType="default"
                             autoCapitalize="sentences"
@@ -365,7 +366,7 @@ const PollScreen = props => {
 PollScreen.navigationOptions = navData => {
     const submitFn = navData.navigation.getParam('submit');
     return {
-        headerTitle: 'Poll',
+        headerTitle: 'Encuesta',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
@@ -404,6 +405,10 @@ const styles = StyleSheet.create({
     card: {
         padding: 20,
         marginBottom: 20
+    },
+    title: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 14
     }
 });
 

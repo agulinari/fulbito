@@ -16,7 +16,7 @@ const PlayerMatchItem = props => {
                     />
                     <DefaultText>{props.player.name}</DefaultText>
                     <View style={styles.circle}>
-                        <Text style={styles.scoreText}>{props.player.score}</Text>
+                        <Text style={styles.scoreText}>{(props.score !== '-') ? props.score.toFixed(1) : '-'}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

@@ -82,7 +82,7 @@ const MyProfileNavigator = createStackNavigator({
 const matchesTabScreenConfig = {
     CurrentMatch: {
         screen: CurrentMatchNavigator, navigationOptions: {
-            tabBarLabel: 'Current Match',
+            tabBarLabel: 'Partido Actual',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-calendar' size={25} color={tabInfo.tintColor} />
             },
@@ -91,7 +91,7 @@ const matchesTabScreenConfig = {
     },
     AllMatches: {
         screen: MatchesNavigator, navigationOptions: {
-            tabBarLabel: 'All Matches',
+            tabBarLabel: 'Todos los Partidos',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-people' size={25} color={tabInfo.tintColor} />
             },
@@ -100,7 +100,7 @@ const matchesTabScreenConfig = {
     },
     MyMatches: {
         screen: MyMatchesNavigator, navigationOptions: {
-            tabBarLabel: 'My Matches',
+            tabBarLabel: 'Mis Partidos',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-person' size={25} color={tabInfo.tintColor} />
             },
@@ -112,7 +112,7 @@ const matchesTabScreenConfig = {
 const playersTabScreenConfig = {
     Players: {
         screen: PlayersNavigator, navigationOptions: {
-            tabBarLabel: 'Players',
+            tabBarLabel: 'Jugadores',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-people' size={25} color={tabInfo.tintColor} />
             },
@@ -121,7 +121,7 @@ const playersTabScreenConfig = {
     },
     MyProfile: {
         screen: MyProfileNavigator, navigationOptions: {
-            tabBarLabel: 'My Profile',
+            tabBarLabel: 'Mi Perfil',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-person' size={25} color={tabInfo.tintColor} />
             },

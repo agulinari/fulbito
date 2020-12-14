@@ -55,8 +55,8 @@ const EnlistingScreen = props => {
     if (error) {
         return (
             <View style={styles.screen} >
-                <Text>An error ocurred!</Text>
-                <Button title="Try Again" color={Colors.primaryColor} onPress={loadList} />
+                <Text>Ocurrió un error!</Text>
+                <Button title="Intente nuevamente" color={Colors.primaryColor} onPress={loadList} />
             </View>
         )
     }
@@ -73,7 +73,7 @@ const EnlistingScreen = props => {
         <SafeAreaView style={styles.screen}>
             <View style={styles.buttonContainer}>
                 <Button 
-                    title="Register for next match"
+                    title="Registrarse para el siguiente partido"
                     disabled={registeredPlayers.length >= 10 || registeredIds.includes(userId)} 
                     onPress={enlistHandler} 
                 />
@@ -91,7 +91,7 @@ const EnlistingScreen = props => {
 
 EnlistingScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Match Registration',
+        headerTitle: 'Anotate para el próximo encuentro',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item

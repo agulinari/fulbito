@@ -44,8 +44,8 @@ const PlayersScreen = props => {
     if (error) {
         return (
             <View style={styles.screen} >
-                <Text>An error ocurred!</Text>
-                <Button title="Try Again" color={Colors.primaryColor} onPress={loadPlayers} />
+                <Text>Ocurrió un error!</Text>
+                <Button title="Intente nuevamente" color={Colors.primaryColor} onPress={loadPlayers} />
             </View>
         )
     }
@@ -64,7 +64,7 @@ const PlayersScreen = props => {
     if (!isLoading && players.length === 0) {
         return (
             <View style={styles.screen} >
-                <Text>No players found.</Text>
+                <Text>No se encontraron jugadores.</Text>
             </View>
         )
     }
@@ -84,7 +84,7 @@ const PlayersScreen = props => {
 
 PlayersScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Players',
+        headerTitle: 'Jugadores',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item

@@ -22,7 +22,7 @@ const PlayerProfileScreen = props => {
 
 PlayerProfileScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Player Profile'
+        headerTitle: 'Perfil del jugador'
     };
 };
 

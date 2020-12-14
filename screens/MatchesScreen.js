@@ -64,7 +64,7 @@ const MatchesScreen = props => {
     if (!isLoading && matches.length === 0) {
         return (
             <View style={styles.screen} >
-                <Text>No matches found.</Text>
+                <Text>No se encontraron partidos.</Text>
             </View>
         )
     }
@@ -84,7 +84,7 @@ const MatchesScreen = props => {
 
 MatchesScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Matches',
+        headerTitle: 'Todos los partidos',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item

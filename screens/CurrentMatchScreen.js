@@ -55,8 +55,8 @@ const CurrentMatchScreen = props => {
     if (error) {
         return (
             <View style={styles.screen} >
-                <Text>An error ocurred!</Text>
-                <Button title="Try Again" color={Colors.primaryColor} onPress={loadState} />
+                <Text>Ocurrió un error!</Text>
+                <Button title="Intente nuevamente" color={Colors.primaryColor} onPress={loadState} />
             </View>
         )
     }
@@ -70,7 +70,7 @@ const CurrentMatchScreen = props => {
 
 CurrentMatchScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Current Match',
+        headerTitle: 'Partido actual',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item

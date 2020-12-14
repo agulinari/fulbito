@@ -17,7 +17,7 @@ const MyMatchesScreen = props => {
 
 MyMatchesScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'My Matches',
+        headerTitle: 'Mis Partidos',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
