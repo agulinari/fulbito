@@ -10,6 +10,10 @@ import Colors from '../constants/Colors';
 
 const MatchDetailScreen = props => {
 
+    // Params
+    const matchId = props.navigation.getParam('matchId');
+    
+    // States
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const [comments, setComments] = useState([]);
@@ -19,17 +23,16 @@ const MatchDetailScreen = props => {
     const [dataAntifairplay, setDataAntifairplay] = useState([]);
     const [dataGoleador, setDataGoleador] = useState([]);
     const [dataFantasma, setDataFantasma] = useState([]);
-    const matchId = props.navigation.getParam('matchId');
 
-
+    // Selectors
     const selectedMatch = useSelector(state =>
         state.matches.matches.find(match => match.id === matchId)
     );
-
     const votes = useSelector(state => state.votes.votes);
 
     const dispatch = useDispatch();
 
+    // Charts config
     const screenWidth = Dimensions.get('window').width;
     const chartConfig = {
         backgroundGradientFrom: '#1E2923',
@@ -38,11 +41,12 @@ const MatchDetailScreen = props => {
     };
 
 
+    // Load votes
     const loadVotes = useCallback(async () => {
         setError(null);
         try {
             await dispatch(votesActions.fetchVotes(matchId));
-        } catch {
+        } catch (err) {
             setError(err.message);
         }
     }, [dispatch, setIsLoading, setError])
@@ -62,22 +66,19 @@ const MatchDetailScreen = props => {
         });
     }, [dispatch, loadVotes]);
 
+    // Use votes and match information to generate charts data
     useEffect(() => {
         if (votes && selectedMatch) {
-            console.log('selectedMatch ' + JSON.stringify(selectedMatch));
             const matchVotes = (votes[matchId] ? votes[matchId] : []);
-            console.log('votes ' + JSON.stringify(matchVotes));
             const comments = matchVotes.map(vote => vote.comment);
             setComments(comments);
             let scoreTeam1 = [];
             selectedMatch.team1.players.forEach(player => {
                 const idPlayer = player.id;
-                console.log('playerId ', idPlayer);
                 const sum = matchVotes.map(vote =>
                     vote.scores.find(score => score.playerId === idPlayer))
                     .filter(vote => vote !== undefined)
                     .reduce((accumulator, currentValue) => accumulator + currentValue.score, 0);
-                console.log('sum ', sum);
                 const avg = (matchVotes.length !== 0) ? sum / matchVotes.length : '-';
                 scoreTeam1.push(avg);
             });
@@ -148,15 +149,16 @@ const MatchDetailScreen = props => {
                 });
 
             });
-            setDataTerminator(dataTerminator);
-            setDataAntifairplay(dataAntifairplay);
-            setDataGoleador(dataGoleador);
-            setDataFantasma(dataFantasma);
+            setDataTerminator(dataTerminator.sort((a,b) => a.votes < b.votes));
+            setDataAntifairplay(dataAntifairplay.sort((a,b) => a.votes < b.votes));
+            setDataGoleador(dataGoleador.sort((a,b) => a.votes < b.votes));
+            setDataFantasma(dataFantasma.sort((a,b) => a.votes < b.votes));
         }
     }, [votes, selectedMatch, matchId,
         setComments, setScoreTeam1, setScoreTeam2,
         setDataAntifairplay, setDataFantasma, setDataGoleador, setDataTerminator]);
 
+    // Error screen
     if (error) {
         return (
             <View style={styles.screen} >
@@ -166,6 +168,7 @@ const MatchDetailScreen = props => {
         )
     }
 
+    // Loading screen
     if (isLoading) {
         return (
             <View style={styles.screen} >
@@ -177,7 +180,7 @@ const MatchDetailScreen = props => {
         )
     }
 
-
+    // Main screen
     return (
         <SafeAreaView style={styles.screen}>
             <ScrollView>

@@ -129,15 +129,17 @@ const AuthScreen = props => {
                                     />)
                             }
                         </View>
-                        <View style={styles.buttonContainer}>
+                        
+                        {/*<View style={styles.buttonContainer}>
                             <Button
-                                title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`}
+                               title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`}
                                 color={Colors.accentColor}
                                 onPress={() => {
                                     setIsSignup(prevState => !prevState);
                                 }}
                             />
                         </View>
+                            */}
                     </ScrollView>
                 </Card>
             </LinearGradient>

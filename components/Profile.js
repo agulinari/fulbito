@@ -15,6 +15,7 @@ import PropTypes from 'prop-types'
 import Email from './UI/Email'
 import Separator from './UI/Separator'
 import Tel from './UI/Tel'
+import { images } from '../constants/Images';
 
 
 class Profile extends Component {
@@ -26,20 +27,14 @@ class Profile extends Component {
       city: PropTypes.string.isRequired,
       country: PropTypes.string.isRequired,
     }).isRequired,
-    emails: PropTypes.arrayOf(
-      PropTypes.shape({
-        email: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    tels: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    email: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    tel: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired,
   }
 
   onPressPlace = () => {
@@ -63,7 +58,6 @@ class Profile extends Component {
   renderHeader = () => {
     const {
       avatar,
-      avatarBackground,
       name,
       address: { city, country },
     } = this.props
@@ -73,12 +67,12 @@ class Profile extends Component {
         <ImageBackground
           style={styles.headerBackgroundImage}
           blurRadius={10}
-          source={{uri: avatarBackground}}
+          source={{ uri: "https://i.imgur.com/rXVcgTZ.jpg" }}
         >
           <View style={styles.headerColumn}>
             <Image
               style={styles.userImage}
-              source={{uri: avatar}}
+              source={images[avatar].uri}
             />
             <Text style={styles.userNameText}>{name}</Text>
             <View style={styles.userAddressRow}>
@@ -103,44 +97,24 @@ class Profile extends Component {
   }
 
   renderTel = () => (
-    <FlatList
-      contentContainerStyle={styles.telContainer}
-      data={this.props.tels}
-      renderItem={(list) => {
-        const { id, name, number } = list.item
-
-        return (
-          <Tel
-            key={`tel-${id}`}
-            index={list.index}
-            name={name}
-            number={number}
-            onPressSms={this.onPressSms}
-            onPressTel={this.onPressTel}
-          />
-        )
-      }}
-    />
+    <View style={styles.telContainer}>
+      <Tel
+        name="Mobile"
+        number={this.props.tel}
+        onPressSms={this.onPressSms}
+        onPressTel={this.onPressTel}
+      />
+    </View>
   )
 
   renderEmail = () => (
-    <FlatList
-      contentContainerStyle={styles.emailContainer}
-      data={this.props.emails}
-      renderItem={(list) => {
-        const { email, id, name } = list.item
-
-        return (
-          <Email
-            key={`email-${id}`}
-            index={list.index}
-            name={name}
-            email={email}
-            onPressEmail={this.onPressEmail}
-          />
-        )
-      }}
-    />
+    <View style={styles.emailContainer} >
+      <Email
+        name="Personal"
+        email={this.props.email}
+        onPressEmail={this.onPressEmail}
+      />
+    </View>
   )
 
   render() {
@@ -161,80 +135,80 @@ class Profile extends Component {
 
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        backgroundColor: '#FFF',
-        borderWidth: 0,
-        flex: 1,
-        margin: 0,
-        padding: 0,
-      },
-      container: {
-        flex: 1
-      },
-      emailContainer: {
-        backgroundColor: '#FFF',
-        flex: 1,
-        paddingTop: 30,
-      },
-      headerBackgroundImage: {
-        paddingBottom: 20,
-        paddingTop: 45,
-      },
-      headerContainer: {},
-      headerColumn: {
-        backgroundColor: 'transparent',
-        ...Platform.select({
-          ios: {
-            alignItems: 'center',
-            elevation: 1,
-            marginTop: -1,
-          },
-          android: {
-            alignItems: 'center',
-          },
-        }),
-      },
-      placeIcon: {
-        color: 'white',
-        fontSize: 26,
-      },
-      scroll: {
-        backgroundColor: '#FFF',
-        width: '100%',
-      },
-      telContainer: {
-        backgroundColor: '#FFF',
-        flex: 1,
-        paddingTop: 30,
-      },
-      userAddressRow: {
+  cardContainer: {
+    backgroundColor: '#FFF',
+    borderWidth: 0,
+    flex: 1,
+    margin: 0,
+    padding: 0,
+  },
+  container: {
+    flex: 1
+  },
+  emailContainer: {
+    backgroundColor: '#FFF',
+    flex: 1,
+    paddingTop: 30,
+  },
+  headerBackgroundImage: {
+    paddingBottom: 20,
+    paddingTop: 45,
+  },
+  headerContainer: {},
+  headerColumn: {
+    backgroundColor: 'transparent',
+    ...Platform.select({
+      ios: {
         alignItems: 'center',
-        flexDirection: 'row',
+        elevation: 1,
+        marginTop: -1,
       },
-      userCityRow: {
-        backgroundColor: 'transparent',
+      android: {
+        alignItems: 'center',
       },
-      userCityText: {
-        color: '#A5A5A5',
-        fontSize: 15,
-        fontWeight: '600',
-        textAlign: 'center',
-      },
-      userImage: {
-        borderColor: '#FFF',
-        borderRadius: 85,
-        borderWidth: 3,
-        height: 170,
-        marginBottom: 15,
-        width: 170,
-      },
-      userNameText: {
-        color: '#FFF',
-        fontSize: 22,
-        fontWeight: 'bold',
-        paddingBottom: 8,
-        textAlign: 'center',
-      }
+    }),
+  },
+  placeIcon: {
+    color: 'white',
+    fontSize: 26,
+  },
+  scroll: {
+    backgroundColor: '#FFF',
+    width: '100%',
+  },
+  telContainer: {
+    backgroundColor: '#FFF',
+    flex: 1,
+    paddingTop: 30,
+  },
+  userAddressRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  userCityRow: {
+    backgroundColor: 'transparent',
+  },
+  userCityText: {
+    color: '#A5A5A5',
+    fontSize: 15,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  userImage: {
+    borderColor: '#FFF',
+    borderRadius: 85,
+    borderWidth: 3,
+    height: 170,
+    marginBottom: 15,
+    width: 170,
+  },
+  userNameText: {
+    color: '#FFF',
+    fontSize: 22,
+    fontWeight: 'bold',
+    paddingBottom: 8,
+    textAlign: 'center',
+  }
 });
 
 export default Profile;

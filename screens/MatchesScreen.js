@@ -4,27 +4,37 @@ import MatchList from '../components/MatchList';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/UI/HeaderButton';
 import Colors from '../constants/Colors';
-import { View, Text, Button, ActivityIndicator, SafeAreaView, StyleSheet, Platform } from 'react-native';
+import { View, Text, Button, Switch, ActivityIndicator, SafeAreaView, StyleSheet, Platform } from 'react-native';
 import * as matchesActions from '../store/actions/matches';
 
 const MatchesScreen = props => {
 
+    // States
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [filteredMatches, setFilteredMatches] = useState([]);
     const [error, setError] = useState();
+    const [isEnabled, setIsEnabled] = useState(false);
+    
+    // Selectors
     const matches = useSelector(state => state.matches.matches);
+    const userId = useSelector(state => state.auth.userId);
     const dispatch = useDispatch();
+    
+    // Switch button 
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    // Load matches
     const loadMatches = useCallback(async () => {
         setError(null);
         setIsRefreshing(true);
         try {
             await dispatch(matchesActions.fetchMatches());
-        } catch {
+        } catch (err) {
             setError(err.message);
         }
         setIsRefreshing(false);
-    }, [dispatch, setIsLoading, setError])
+    }, [dispatch, setIsLoading, setError]);
 
     useEffect(() => {
         const willFocusSub = props.navigation.addListener('willFocus', loadMatches);
@@ -41,40 +51,80 @@ const MatchesScreen = props => {
         });
     }, [dispatch, loadMatches]);
 
+    // Filter matches
+    useEffect(() => {
+
+        if (isEnabled) {
+            const filter = matches.filter(match =>
+                (match.team1.players.find(player => player.id === userId) !== undefined)
+                || (match.team2.players.find(player => player.id === userId) !== undefined)
+            );
+            setFilteredMatches(filter);
+        } else {
+            setFilteredMatches(matches);
+        }
+    }, [isEnabled, matches, userId]);
+
+    // Error screen
     if (error) {
         return (
-            <View style={styles.screen} >
+            <SafeAreaView style={styles.screen} >
                 <Text>An error ocurred!</Text>
                 <Button title="Try Again" color={Colors.primaryColor} onPress={loadMatches} />
-            </View>
+            </SafeAreaView>
         )
     }
 
+    // Loading screen
     if (isLoading) {
         return (
-            <View style={styles.screen} >
+            <SafeAreaView style={styles.screen} >
                 <ActivityIndicator
                     size="large"
                     color={Colors.primaryColor}
                 />
-            </View>
+            </SafeAreaView>
         )
     }
 
-    if (!isLoading && matches.length === 0) {
+    // Empty list screen
+    if (!isLoading && filteredMatches.length === 0) {
         return (
-            <View style={styles.screen} >
+            <SafeAreaView style={styles.screen}>
+                <View style={styles.switchContainer}>
+                <Text sytle={styles.switchLabel}>Mis Partidos</Text>
+                <Switch
+                    trackColor={{ false: Colors.primaryColor, true: Colors.accentColor }}
+                    thumbColor={isEnabled ? Colors.secondaryColor : Colors.backColor}
+                    ios_backgroundColor={Colors.backColor}
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                />
+                </View>
+                <View style={styles.centered}>
                 <Text>No se encontraron partidos.</Text>
-            </View>
+                </View>
+            </SafeAreaView>
         )
     }
 
+    // Main screen
     return (
         <SafeAreaView style={styles.screen}>
+            <View style={styles.switchContainer}>
+                <Text sytle={styles.switchLabel}>{ (isEnabled) ? 'Mis Partidos' : 'Todos los partidos' }</Text>
+                <Switch
+                    trackColor={{ false: Colors.primaryColor, true: Colors.accentColor }}
+                    thumbColor={isEnabled ? Colors.secondaryColor : Colors.backColor}
+                    ios_backgroundColor={Colors.backColor}
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                />
+            </View>
             <MatchList
                 onRefresh={loadMatches}
                 refreshing={isRefreshing}
-                listData={matches}
+                listData={filteredMatches}
                 navigation={props.navigation}
             />
         </SafeAreaView>
@@ -84,7 +134,7 @@ const MatchesScreen = props => {
 
 MatchesScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Todos los partidos',
+        headerTitle: 'Partidos',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
@@ -101,9 +151,21 @@ MatchesScreen.navigationOptions = (navData) => {
 
 const styles = StyleSheet.create({
     screen: {
+        flex: 1
+    },
+    centered: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    switchContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems:'center',
+        margin: 10
+    },
+    switchLabel: {
+        fontFamily: 'open-sans-bold'
     }
 });
 

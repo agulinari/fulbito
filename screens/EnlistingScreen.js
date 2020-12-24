@@ -25,7 +25,7 @@ const EnlistingScreen = props => {
         try {
             await dispatch(enlistActions.fetchList());
             await dispatch(playersActions.fetchPlayers());
-        } catch {
+        } catch (err) {
             setError(err.message);
         }
         setIsRefreshing(false);
@@ -72,11 +72,17 @@ const EnlistingScreen = props => {
     return (
         <SafeAreaView style={styles.screen}>
             <View style={styles.buttonContainer}>
-                <Button 
+                <Button
                     title="Registrarse para el siguiente partido"
-                    disabled={registeredPlayers.length >= 10 || registeredIds.includes(userId)} 
-                    onPress={enlistHandler} 
+                    disabled={registeredPlayers.length >= 10 || registeredIds.includes(userId)}
+                    onPress={enlistHandler}
                 />
+                {
+                    (registeredPlayers.length >= 10) &&
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.info}>Equipos completos</Text>
+                    </View>
+                }
             </View>
             <PlayerList
                 onRefresh={loadList}
@@ -91,7 +97,7 @@ const EnlistingScreen = props => {
 
 EnlistingScreen.navigationOptions = (navData) => {
     return {
-        headerTitle: 'Anotate para el próximo encuentro',
+        headerTitle: 'Anotate para el partido',
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
@@ -114,7 +120,16 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 10
+    },
+    infoContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5
+    },
+    info: {
+        fontFamily: 'open-sans-bold'
     }
+
 });
 
 export default EnlistingScreen;

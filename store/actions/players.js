@@ -27,7 +27,10 @@ export const fetchPlayers = () => {
                         key,
                         resData[key].avatar,
                         resData[key].name,
-                        resData[key].description
+                        resData[key].description,
+                        resData[key].address,
+                        resData[key].tel,
+                        resData[key].email
                     )
                 )
             }
@@ -54,7 +57,7 @@ export const deletePlayer = playerId => {
     }
 };
 
-export const createPlayer = (avatar, name, description) => {
+export const createPlayer = (avatar, name, description, address, tel, email) => {
     return async (dispatch, getState) => {
 
         const token = getState().auth.token;
@@ -66,13 +69,14 @@ export const createPlayer = (avatar, name, description) => {
             body: JSON.stringify({
                 avatar,
                 name,
-                description
+                description,
+                address,
+                tel,
+                email
             })
         });
 
         const resData = await response.json();
-
-        console.log(resData);
 
         dispatch({
             type: CREATE_PLAYER,
@@ -80,14 +84,17 @@ export const createPlayer = (avatar, name, description) => {
                 id: resData.name,
                 avatar: avatar,
                 name: name,
-                description
+                description,
+                address,
+                tel,
+                email
             }
         });
     }
 };
 
 
-export const updatePlayer = (id, avatar, name, description) => {
+export const updatePlayer = (id, avatar, name, description, address, tel, email) => {
 
     return async (dispatch, getState) => {
 
@@ -100,7 +107,10 @@ export const updatePlayer = (id, avatar, name, description) => {
             body: JSON.stringify({
                 avatar,
                 name,
-                description
+                description,
+                address,
+                tel,
+                email
             })
         });
 
@@ -114,7 +124,10 @@ export const updatePlayer = (id, avatar, name, description) => {
             playerData: {
                 avatar: avatar,
                 name: name,
-                description
+                description,
+                address,
+                tel,
+                email
             }
         });
     }

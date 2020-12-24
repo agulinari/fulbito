@@ -18,8 +18,6 @@ export const fetchMatches = () => {
 
             const resData = await response.json();
 
-            //console.log(resData);
-
             const loadedMatches = [];
             for (const key in resData) {
                 loadedMatches.push(
@@ -74,8 +72,6 @@ export const createMatch = (title, date, place, team1, team2) => {
         });
 
         const resData = await response.json();
-
-        console.log(resData);
 
         dispatch({
             type: CREATE_MATCH,

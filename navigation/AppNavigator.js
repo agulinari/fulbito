@@ -5,11 +5,11 @@ import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-dr
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Platform, SafeAreaView, View, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import MatchesScreen from '../screens/MatchesScreen';
 import MatchDetailScreen from '../screens/MatchDetailScreen';
 import Colors from '../constants/Colors';
-import MyMatchesScreen from '../screens/MyMatchesScreen';
 import PlayersScreen from '../screens/PlayersScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CurrentMatchScreen from '../screens/CurrentMatchScreen';
@@ -29,20 +29,24 @@ const defaultStackNavigationOptions = {
 };
 
 const MatchesNavigator = createStackNavigator({
-    Matches: {
-        screen: MatchesScreen
-    },
-    MatchDetail: {
-        screen: MatchDetailScreen
-    }
+    Matches: MatchesScreen,
+    MatchDetail: MatchDetailScreen
 }, {
+    initialRouteName: 'Matches',
+    initialRouteParams: {
+        myMatches: false
+    },
     defaultNavigationOptions: defaultStackNavigationOptions
 });
 
 const MyMatchesNavigator = createStackNavigator({
-    MyMatches: MyMatchesScreen,
+    MyMatches: MatchesScreen,
     MatchDetail: MatchDetailScreen
 }, {
+    initialRouteName: 'MyMatches',
+    initialRouteParams: {
+        myMatches: true
+    },
     defaultNavigationOptions: defaultStackNavigationOptions
 });
 
@@ -55,7 +59,8 @@ const EnlistingNavigator = createStackNavigator({
 
 
 const PollNavigator = createStackNavigator({
-    Poll: PollScreen
+    Poll: PollScreen,
+    MatchDetail: MatchDetailScreen
 }, {
     defaultNavigationOptions: defaultStackNavigationOptions
 });
@@ -64,6 +69,17 @@ const CurrentMatchNavigator = createSwitchNavigator({
     CurrentMatch: CurrentMatchScreen,
     Enlisting: EnlistingNavigator,
     Poll: PollNavigator
+}, {
+    navigationOptions: {
+        drawerIcon: drawerConfig => (
+            <Ionicons
+                name={Platform.OS === 'android' ? 'md-calendar' : 'ios-calendar'}
+                size={23}
+                color={drawerConfig.tintColor}
+            />
+        )
+    },
+    defaultNavigationOptions: defaultStackNavigationOptions
 });
 
 const PlayersNavigator = createStackNavigator({
@@ -80,55 +96,28 @@ const MyProfileNavigator = createStackNavigator({
 });
 
 const matchesTabScreenConfig = {
-    CurrentMatch: {
-        screen: CurrentMatchNavigator, navigationOptions: {
-            tabBarLabel: 'Partido Actual',
+    Matches: {
+        screen: MatchesNavigator,
+        navigationOptions: {
+            tabBarLabel: 'Partidos',
             tabBarIcon: (tabInfo) => {
-                return <Ionicons name='ios-calendar' size={25} color={tabInfo.tintColor} />
-            },
-            tabBarColor: Colors.primaryColor
-        }
-    },
-    AllMatches: {
-        screen: MatchesNavigator, navigationOptions: {
-            tabBarLabel: 'Todos los Partidos',
-            tabBarIcon: (tabInfo) => {
-                return <Ionicons name='ios-people' size={25} color={tabInfo.tintColor} />
+                return <MaterialCommunityIcons name='soccer-field' size={25} color={tabInfo.tintColor} />
             },
             tabBarColor: Colors.accentColor
         }
     },
-    MyMatches: {
-        screen: MyMatchesNavigator, navigationOptions: {
-            tabBarLabel: 'Mis Partidos',
-            tabBarIcon: (tabInfo) => {
-                return <Ionicons name='ios-person' size={25} color={tabInfo.tintColor} />
-            },
-            tabBarColor: Colors.primaryColor
-        }
-    }
-};
-
-const playersTabScreenConfig = {
     Players: {
         screen: PlayersNavigator, navigationOptions: {
             tabBarLabel: 'Jugadores',
             tabBarIcon: (tabInfo) => {
                 return <Ionicons name='ios-people' size={25} color={tabInfo.tintColor} />
             },
-            tabBarColor: Colors.accentColor
-        }
-    },
-    MyProfile: {
-        screen: MyProfileNavigator, navigationOptions: {
-            tabBarLabel: 'Mi Perfil',
-            tabBarIcon: (tabInfo) => {
-                return <Ionicons name='ios-person' size={25} color={tabInfo.tintColor} />
-            },
             tabBarColor: Colors.primaryColor
         }
     }
 };
+
+
 
 const MatchesTabNavigator = Platform.OS === 'android'
     ? createMaterialBottomTabNavigator(matchesTabScreenConfig, {
@@ -136,6 +125,15 @@ const MatchesTabNavigator = Platform.OS === 'android'
         shifting: true,
         barStyle: {
             backgroundColor: Colors.primaryColor
+        },
+        navigationOptions: {
+            drawerIcon: drawerConfig => (
+                <MaterialCommunityIcons
+                    name="soccer-field"
+                    size={23}
+                    color={drawerConfig.tintColor}
+                />
+            )
         }
     })
     : createBottomTabNavigator(matchesTabScreenConfig, {
@@ -145,24 +143,11 @@ const MatchesTabNavigator = Platform.OS === 'android'
     });
 
 
-const PlayersTabNavigator = Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator(playersTabScreenConfig, {
-        activeTintColor: 'white',
-        shifting: true,
-        barStyle: {
-            backgroundColor: Colors.primaryColor
-        }
-    })
-    : createBottomTabNavigator(playersTabScreenConfig, {
-        tabBarOptions: {
-            activeTintColor: Colors.accentColor
-        }
-    });
-
 const MainNavigator = createDrawerNavigator({
+    Home: CurrentMatchNavigator,
     Matches: MatchesTabNavigator,
-    Players: PlayersTabNavigator,
-    Stats: StatsScreen
+    //Profile: MyProfileNavigator
+    // Stats: StatsScreen
 }, {
     contentOptions: {
         activeTintColor: Colors.accentColor,
@@ -176,7 +161,7 @@ const MainNavigator = createDrawerNavigator({
             <View style={{ flex: 1 }}>
                 <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
                     <DrawerNavigatorItems {...props} />
-                    <Button title="Logout" color={Colors.primaryColor} onPress={() => { 
+                    <Button title="Logout" color={Colors.primaryColor} onPress={() => {
                         dispatch(authActions.logout());
                     }} />
                 </SafeAreaView>

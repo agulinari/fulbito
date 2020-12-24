@@ -1,13 +1,13 @@
 import React, { useState, useReducer, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, ScrollView, ActivityIndicator, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Button, Text, ScrollView, ActivityIndicator, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import ScorePicker from '../components/UI/ScorePicker';
 import HeaderButton from '../components/UI/HeaderButton';
 import Input from '../components/UI/Input';
 import Card from '../components/UI/Card';
 import Colors from '../constants/Colors';
-import * as voteActions from '../store/actions/votes';
+import * as votesActions from '../store/actions/votes';
 import * as matchesActions from '../store/actions/matches';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -43,6 +43,7 @@ const PollScreen = props => {
     const [isVoting, setIsVoting] = useState(false);
     const [error, setError] = useState();
     const [errorVoting, setErrorVoting] = useState();
+    const [alreadyVoted, setAlreadyVoted] = useState(false);
     const [players, setPlayers] = useState([]);
     const [scores, setScores] = useState(
         [
@@ -61,8 +62,8 @@ const PollScreen = props => {
 
     const dispatch = useDispatch();
     const userId = useSelector(state => state.auth.userId);
-
     const match = useSelector(state => state.matches.matches[0]);
+    const votes = useSelector(state => state.votes.votes);
 
     const [formState, dispatchFormState] = useReducer(formReducer,
         {
@@ -122,10 +123,23 @@ const PollScreen = props => {
         setError(null);
         try {
             await dispatch(matchesActions.fetchMatches());
-        } catch {
+            await dispatch(votesActions.fetchVotes(match.id));
+        } catch (err) {
             setError(err.message);
         }
-    }, [dispatch, setIsLoading, setError]);
+    }, [dispatch, setError]);
+
+  /*  const loadVotes = useCallback(async () => {
+        setErrorLoadingVotes(null);
+        try {
+            if (match) {
+                await dispatch(votesActions.fetchVotes(match.id));
+            }
+        } catch (err) {
+            setErrorLoadingVotes(err.message);
+        }
+    }, [dispatch, setIsLoading, loadMatches, setErrorLoadingVotes, match]); */
+
 
     useEffect(() => {
         const willFocusSub = props.navigation.addListener('willFocus', loadMatches);
@@ -135,21 +149,46 @@ const PollScreen = props => {
         };
     }, [loadMatches]);
 
+  /*  useEffect(() => {
+        const willFocusSub = props.navigation.addListener('willFocus', loadVotes);
+
+        return () => {
+            willFocusSub.remove();
+        };
+    }, [loadVotes]); */
+
     useEffect(() => {
         setIsLoading(true);
         loadMatches().then(() => {
-            setIsLoading(false);
+                setIsLoading(false);
+            }
+        );
+    }, [dispatch, loadMatches, setIsLoading]);
+
+  /*  useEffect(() => {
+        setIsLoadingVotes(true);
+        loadVotes().then(() => {
+            setIsLoadingVotes(false);
         });
-    }, [dispatch, loadMatches]);
+    }, [dispatch, loadVotes, setIsLoadingVotes]); */
+
+    useEffect(() => {
+        if (votes[match.id] && userId) {
+            const found = votes[match.id].find(vote => vote.userId === userId);
+            if (found) {
+                setAlreadyVoted(true);
+            }
+        }
+    }, [votes, match, userId, setAlreadyVoted]);
 
     useEffect(() => {
         if (error) {
             Alert.alert('Ocurrió un error!', error, [{ text: 'Ok' }]);
-        }
+        } 
     }, [error]);
 
     const submitHandler = useCallback(async () => {
-       
+
         if (!formState.formIsValid) {
             Alert.alert('Faltan datos a completar!', 'Por favor, complete todos los campos del formulario', [{ text: 'Ok' }]);
             return;
@@ -198,7 +237,7 @@ const PollScreen = props => {
                     score: formState.inputValues.player9
                 }
             ];
-            await dispatch(voteActions.postVote(
+            await dispatch(votesActions.postVote(
                 match.id,
                 userId,
                 scores,
@@ -209,7 +248,13 @@ const PollScreen = props => {
                 formState.inputValues.fantasma
             )
             );
-            props.navigation.goBack();
+            props.navigation.replace({
+                routeName: 'MatchDetail',
+                params: {
+                    matchId: match.id,
+                    matchTitle: match.title
+                }
+            });
         } catch (err) {
             setErrorVoting(err.message);
         }
@@ -243,6 +288,27 @@ const PollScreen = props => {
         return (
             <View style={styles.screen}>
                 <ActivityIndicator size='large' colors={Colors.primaryColor} />
+            </View>
+        );
+    }
+
+    if (alreadyVoted) {
+        return (
+            <View style={styles.screen}>
+                <Text>Ya votaste!</Text>
+                <Button
+                    title="Ver resultados"
+                    color={Colors.accentColor}
+                    onPress={() => {
+                        props.navigation.replace({
+                            routeName: 'MatchDetail',
+                            params: {
+                                matchId: match.id,
+                                matchTitle: match.title
+                            }
+                        });
+                    }}
+                />
             </View>
         );
     }

@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
 
 const Tel = ({
   containerStyle,
-  index,
   name,
   number,
   onPressSms,
@@ -64,14 +63,12 @@ const Tel = ({
     <TouchableOpacity onPress={() => onPressTel(number)}>
       <View style={[styles.container, containerStyle]}>
         <View style={styles.iconRow}>
-          {index === 0 && (
             <Icon
               name="call"
               underlayColor="transparent"
               iconStyle={styles.telIcon}
               onPress={() => onPressTel(number)}
             />
-          )}
         </View>
         <View style={styles.telRow}>
           <View style={styles.telNumberColumn}>
@@ -98,7 +95,6 @@ const Tel = ({
 
 Tel.propTypes = {
   containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-  index: PropTypes.number.isRequired,
   name: PropTypes.string,
   number: PropTypes.string.isRequired,
   onPressSms: PropTypes.func.isRequired,

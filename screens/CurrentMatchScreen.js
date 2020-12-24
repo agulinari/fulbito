@@ -19,7 +19,7 @@ const CurrentMatchScreen = props => {
         setError(null);
         try {
             await dispatch(statusActions.getStatus());
-        } catch {
+        } catch (err) {
             setError(err.message);
         }
     }, [dispatch, setIsLoading, setError])

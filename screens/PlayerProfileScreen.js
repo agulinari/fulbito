@@ -14,7 +14,7 @@ const PlayerProfileScreen = props => {
 
     return (
         <SafeAreaView style={styles.screen}>
-            <Profile {...contactData} />
+            <Profile {...selectedPlayer} />
         </SafeAreaView>
     )
 };

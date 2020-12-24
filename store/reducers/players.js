@@ -18,7 +18,10 @@ export default (state = initalState, action) => {
                 action.playerData.id, 
                 action.playerData.avatar, 
                 action.playerData.name, 
-                action.playerData.description
+                action.playerData.description,
+                action.playerData.address,
+                action.playerData.tel,
+                action.playerData.email
                 );
             return {
                 ...state,
@@ -30,7 +33,10 @@ export default (state = initalState, action) => {
                 action.pid, 
                 action.playerData.avatar,
                 action.playerData.name,
-                action.playerData.description
+                action.playerData.description,
+                action.playerData.address,
+                action.playerData.tel,
+                action.playerData.email
                 );
             const updatedPlayers = [...state.players];
             updatedPlayers[playerIndex] = updatedPlayer;

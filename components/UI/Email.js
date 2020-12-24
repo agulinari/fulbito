@@ -41,18 +41,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const Email = ({ containerStyle, onPressEmail, name, email, index }) => (
+const Email = ({ containerStyle, onPressEmail, name, email }) => (
   <TouchableOpacity onPress={() => onPressEmail(email)}>
     <View style={[styles.container, containerStyle]}>
       <View style={styles.iconRow}>
-        {index === 0 && (
           <Icon
             name="email"
             underlayColor="transparent"
             iconStyle={styles.emailIcon}
             onPress={() => onPressEmail()}
           />
-        )}
       </View>
       <View style={styles.emailRow}>
         <View style={styles.emailColumn}>
@@ -71,7 +69,6 @@ const Email = ({ containerStyle, onPressEmail, name, email, index }) => (
 Email.propTypes = {
   containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   email: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
   name: PropTypes.string,
   onPressEmail: PropTypes.func.isRequired,
 }

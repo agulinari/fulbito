@@ -20,7 +20,7 @@ const PlayersScreen = props => {
         setIsRefreshing(true);
         try {
             await dispatch(playerActions.fetchPlayers());
-        } catch {
+        } catch (err) {
             setError(err.message);
         }
         setIsRefreshing(false);

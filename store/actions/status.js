@@ -11,7 +11,6 @@ export const getStatus = () => {
             }
 
             const resData = await response.json();
-            console.log(resData);
 
             dispatch({ 
                 type: SET_STATUS, 
